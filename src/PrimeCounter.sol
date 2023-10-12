@@ -2,6 +2,7 @@
 pragma solidity ^0.8.0;
 
 import {IERC721Enumerable} from "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
+// import {ERC721, ERC721Enumerable} from "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
 /**
  * @title PrimeCounter
@@ -17,25 +18,6 @@ contract PrimeCounter {
      */
     constructor(address nftAddress) {
         _nft = IERC721Enumerable(nftAddress);
-    }
-
-    /**
-     * @notice Checks if a given number is a prime number.
-     * @param num The number to check.
-     * @return A boolean indicating whether the number is prime or not.
-     */
-    function isPrime(uint256 num) public pure returns (bool) {
-        if (num < 2) {
-            return false;
-        }
-
-        for (uint256 i = 2; i * i <= num; i++) {
-            if (num % i == 0) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     /**
@@ -56,4 +38,23 @@ contract PrimeCounter {
 
         return primeCount;
     }
+
+    /**
+     * @notice Checks if a given number is a prime number.
+     * @param num The number to check.
+     * @return result A boolean indicating whether the number is prime or not.
+     */
+    function isPrime(uint num) public pure returns(bool result) {
+    result = true;
+    assembly {
+        for {let i := 2} lt(i, num) {i := add(i, 1)} {
+            if eq(result, 0) {
+                continue
+            }
+            if eq(mod(num, i), 0) {
+                result := 0
+            }
+        }
+    }
+}
 }
