@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity 0.8.21;
 
 import {IERC721Enumerable} from "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
 // import {ERC721, ERC721Enumerable} from "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
@@ -29,7 +29,7 @@ contract PrimeCounter {
         primeCount = 0;
         uint256 balance = _nft.balanceOf(owner);
 
-        for (uint256 i = 0; i < balance; i++) {
+        for (uint256 i = 1; i < balance; i++) {
             uint256 tokenId = _nft.tokenOfOwnerByIndex(owner, i);
             if (isPrime(tokenId)) {
                 primeCount++;
@@ -44,17 +44,20 @@ contract PrimeCounter {
      * @param num The number to check.
      * @return result A boolean indicating whether the number is prime or not.
      */
-    function isPrime(uint num) public pure returns(bool result) {
-    result = true;
-    assembly {
-        for {let i := 2} lt(i, num) {i := add(i, 1)} {
-            if eq(result, 0) {
-                continue
-            }
-            if eq(mod(num, i), 0) {
-                result := 0
+    function isPrime(uint num) public pure returns (bool result) {
+        if (num < 2) {
+            result = false;
+        }
+
+        result = true;
+
+        for (uint i = 2; i * i <= num; i++) {
+            if (num % i == 0) {
+                result = false;
+                // break;
             }
         }
+
+        return result;
     }
-}
 }

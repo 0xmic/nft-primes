@@ -1,0 +1,3 @@
+BondingCurveTokenTest:test_NFTName() (gas: 9669)
+BondingCurveTokenTest:test_PrimeCounter() (gas: 19105)
+BondingCurveTokenTest:test_countPrimes() (gas: 1220975)

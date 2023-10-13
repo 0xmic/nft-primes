@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity 0.8.21;
 
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+import {ERC721, ERC721Enumerable} from "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 // import {ERC721, ERC721Enumerable} from "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
 /**
@@ -32,7 +32,7 @@ contract GameNFT is ERC721Enumerable {
         
         uint256 toMint = amount;
         while (toMint > 0) {
-            uint256 tokenId = MAX_SUPPLY - remainingSupply;
+            uint256 tokenId = MAX_SUPPLY - remainingSupply + 1;
             _mint(msg.sender, tokenId);
             emit NFTMinted(msg.sender, tokenId);
 

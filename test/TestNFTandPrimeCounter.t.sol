@@ -11,6 +11,7 @@ contract BondingCurveTokenTest is StdCheats, Test {
     GameNFT public gameNFT;
     PrimeCounter public primeCounter;
     DeployNFTandPrimeCounter public deployer;
+    address public nftMinter;
 
     address public deployerAddress;
 
@@ -20,6 +21,8 @@ contract BondingCurveTokenTest is StdCheats, Test {
         gameNFT = contracts.gameNFT;
         primeCounter = contracts.primeCounter;
         deployerAddress = deployer.deployerAddress();
+        
+        nftMinter = makeAddr("nftMinter");
     }
 
     function test_NFTName() public {
@@ -39,5 +42,13 @@ contract BondingCurveTokenTest is StdCheats, Test {
       assertEq(primeCounter.isPrime(27), false);
       assertEq(primeCounter.isPrime(63), false);
       assertEq(primeCounter.isPrime(100), false);
+    }
+
+    function test_countPrimes() public {
+      hoax(nftMinter, 10 ether);
+
+      // mint tokenIDs 1-10, primes: 2, 3, 5, 7
+      gameNFT.mint{value: 10 ether}(10);
+      assertEq(primeCounter.countPrimes(nftMinter), 4);
     }
 }
