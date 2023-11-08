@@ -7,7 +7,7 @@ import {GameNFT} from "../src/GameNFT.sol";
 import {PrimeCounter} from "../src/PrimeCounter.sol";
 import {DeployNFTandPrimeCounter} from "../script/DeployNFTandPrimeCounter.s.sol";
 
-contract BondingCurveTokenTest is StdCheats, Test {
+contract TestNFTandPrimeCounter is StdCheats, Test {
     GameNFT public gameNFT;
     PrimeCounter public primeCounter;
     DeployNFTandPrimeCounter public deployer;

@@ -10,7 +10,7 @@ import {IERC721Enumerable} from "@openzeppelin/contracts/token/ERC721/extensions
  */
 contract PrimeCounter {
     
-    IERC721Enumerable private _nft;
+    IERC721Enumerable private immutable _nft;
 
     /**
      * @notice Initializes the contract with an ERC721Enumerable contract's address.
@@ -47,6 +47,7 @@ contract PrimeCounter {
     function isPrime(uint num) public pure returns (bool result) {
         if (num < 2) {
             result = false;
+            return result;
         }
 
         result = true;
